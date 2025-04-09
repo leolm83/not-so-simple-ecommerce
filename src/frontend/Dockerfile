@@ -7,7 +7,7 @@ RUN npm run build
 
 # Multi Stage Build
 
-FROM nginx:1.25.2-alpine
+FROM nginxinc/nginx-unprivileged:1.25.2-alpine
 
 # copia do container com apelido de build a pasta /nsse-frontend/dist (que é a pasta de build default do vite)
 COPY --from=build /nsse-frontend/dist /usr/share/nginx/html
@@ -15,6 +15,10 @@ COPY --from=build /nsse-frontend/dist /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 # define o arquivo de configuracao do nginx
 COPY nginx/nginx.conf /etc/nginx/conf.d/nginx.conf 
+USER nginx
+# todo testar se esse health check funciona pois esta diferente do da aula
+# comando usado na aula -> HEALTHCHECK CMD curl --fail http://localhost:80/ || exit 1
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl --fail http://localhost:80/ || exit 1
 # expoe a porta 80 do container
 EXPOSE 80
 # desabilita o modo deamon nginx, para facilitar a visao dos logs #
