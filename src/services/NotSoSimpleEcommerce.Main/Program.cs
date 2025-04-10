@@ -98,6 +98,7 @@ try
     builder.Host.UseSerilog();
 
     string pathToCAFile = builder.Configuration["MONGO_CERTIFICATE_CONTAINER_PATH"];
+    Console.WriteLine("Mongo certificate import failed: "+ pathToCAFile);
     var localTrustStore = new X509Store(StoreName.Root);
     var certificateCollection = new X509Certificate2Collection();
     try
