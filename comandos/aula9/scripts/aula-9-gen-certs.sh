@@ -1,10 +1,13 @@
 #!/bin/bash
 password='@DevOpsNaNuvem$%!'
 days=365
+keySize=4096
+
 openssl genrsa \
     -des3 \
     -passout pass:$password \
-    -out ../certificates/root-ca.key 4096 
+    -out ../certificates/root-ca.key \
+    $keySize 
 ## gerar certificado:
 openssl req \
     -x509 \
@@ -20,7 +23,7 @@ openssl req \
 openssl req \
     -new \
     -noenc \
-    -newkey rsa:4096 \
+    -newkey rsa:$keySize \
     -keyout ../certificates/signing-request.key \
     -out ../certificates/signing-request.csr \
     -subj '/CN=devopsnanuvem.internal'
