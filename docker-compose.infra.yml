@@ -4,7 +4,6 @@ networks:
     name: nsse-network
 
 services:
-
   nsse.terraform-init.internal:
     container_name: nsse.terraform-init.internal
     depends_on:
