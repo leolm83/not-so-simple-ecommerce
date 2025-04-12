@@ -1,0 +1,14 @@
+networks:
+  nsse-network:
+    driver: bridge
+    name: nsse-network
+services:
+  nsse.nginx.internal:
+    container_name: nsse.nginx.internal
+    image: nginx:1.25.2-alpine
+    ports:
+      - 44300:44300
+    volumes:
+      - ${NGINX_CONF_HOST_PATH}:${NGINX_CONF_CONTAINER_PATH}
+      - ${NGINX_CERT_HOST_PATH}:${NGINX_CERT_CONTAINER_PATH}
+      - ${NGINX_KEY_HOST_PATH}:${NGINX_KEY_CONTAINER_PATH}
